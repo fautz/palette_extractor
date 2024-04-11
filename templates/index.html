@@ -1,0 +1,76 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8"> 
+	<title>Palette Extractor</title> 
+</head> 
+<body> 
+	<form action="/" method="POST" enctype="multipart/form-data"> 
+	  <input type="file" name="file" required /><br/>
+	  Number of colors: <input type="text" name="num_colors" value="{{ num_colors }}" /><br/>
+	  extcolors tolerance: <input type="text" name="extcolors_tolerance" value="{{ extcolors_tolerance }}" /><br/>
+	  <small>(Group colors to limit the output and give a better visual representation. Based on a
+          scale from 0 to 100. Where 0 won't group any color and 100 will group all colors into one.
+	  Tolerance 0 will bypass all conversion. Defaults to 32.)</small><br/>
+	  <input type="submit"/> 
+	</form>
+	<main>
+	  {% if image_path %}
+	    <img src="{{ image_path }}"/>
+	  {% endif %}
+
+	  <p>
+	  {% if pylette_palette_mc and pylette_palette_km %}
+	  <a href="https://github.com/qTipTip/Pylette"><h3>Pylette</h3></a>
+	  K-Means (top) - Median Cut (bottom)<br/>
+	    {% for color in pylette_palette_km %}
+	      <svg width="50" height="50">
+		<rect width="50" height="50" style="fill:{{ color }};" />
+	      </svg>
+	    {% endfor %}
+	    <br/>  
+	    {% for color in pylette_palette_mc %}
+	      <svg width="50" height="50">
+		<rect width="50" height="50" style="fill:{{ color }};" />
+	      </svg>
+	    {% endfor %}
+	  {% endif %}
+	  </p>
+
+	  <p>
+	  {% if colorthief_palette %}
+	    <a href="https://github.com/fengsp/color-thief-py"><h3>Colorthief</h3></a>
+	    {% for color in colorthief_palette %}
+	      <svg width="50" height="50">
+		<rect width="50" height="50" style="fill:{{ color }};" />
+	      </svg>
+	      {% endfor %}
+	  {% endif %}
+	  </p>
+	  
+	  <p>
+	  {% if colorgram_palette %}
+	    <a href="https://github.com/obskyr/colorgram.py"><h3>Colorgram</h3></a>
+	    {% for color in colorgram_palette %}
+	      <svg width="50" height="50">
+		<rect width="50" height="50" style="fill:{{ color }};" />
+	      </svg>
+	      {% endfor %}
+	  {% endif %}
+	  </p>
+	  
+	  <p>
+	  {% if extcolors_palette %}
+	    <a href=""><h3>Extcolors</h3></a>
+	    {% for color in extcolors_palette %}
+	      <svg width="50" height="50">
+		<rect width="50" height="50" style="fill:{{ color }};" />
+	      </svg>
+	      {% endfor %}
+	  {% endif %}
+	  </p>
+	  	  
+	</main> 
+</body> 
+</html>
+
